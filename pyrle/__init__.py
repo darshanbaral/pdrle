@@ -13,7 +13,7 @@ def encode(data: pandas.Series) -> pandas.DataFrame:
     vals = []
     runs = []
 
-    for curr_val in data:
+    for _, curr_val in data.iteritems():
         if curr_val == prev_val:
             prev_run += 1
         else:
@@ -26,3 +26,15 @@ def encode(data: pandas.Series) -> pandas.DataFrame:
     runs.append(prev_run)
 
     return pandas.DataFrame({"vals": vals, "runs": runs})
+
+
+def decode(vals: pandas.Series, runs: pandas.Series(dtype=int)) -> pandas.Series:
+    data = vals.repeat(runs)
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+
+def id(data: pandas.Series) -> pandas.Series:
+    rle = encode(data)
+    return rle.index.repeat(rle.runs)
+
