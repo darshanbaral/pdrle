@@ -52,4 +52,4 @@ def id(data: pandas.Series) -> pandas.Series:
     :return: pandas Series
     """
     rle = encode(data)
-    return rle.index.repeat(rle.runs)
+    return rle.index.repeat(rle.runs).to_series()
