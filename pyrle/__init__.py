@@ -2,6 +2,11 @@ import pandas
 
 
 def encode(data: pandas.Series) -> pandas.DataFrame:
+    """
+    Computes the lengths and values of runs of equal values in a vector.
+    :param data: pandas Series
+    :return: pandas Dataframe with columns 'runs' (length of each run) and 'vals' (corresponding values)
+    """
     if not isinstance(data, pandas.Series):
         raise ValueError("Input must be a pandas Series")
 
@@ -29,12 +34,22 @@ def encode(data: pandas.Series) -> pandas.DataFrame:
 
 
 def decode(vals: pandas.Series, runs: pandas.Series(dtype=int)) -> pandas.Series:
+    """
+    Reverses encode operation. Returns pandas Series from lengths of run and corresponding values.
+    :param vals: values of different runs
+    :param runs: lengths of runs corresponding to vals
+    :return: pandas Series
+    """
     data = vals.repeat(runs)
     data.reset_index(drop=True, inplace=True)
     return data
 
 
 def id(data: pandas.Series) -> pandas.Series:
+    """
+    Generates unique integer id for different runs in a pandas Series
+    :param data: input value, a pandas Series
+    :return: pandas Series
+    """
     rle = encode(data)
     return rle.index.repeat(rle.runs)
-
