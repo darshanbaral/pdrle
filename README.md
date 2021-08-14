@@ -9,6 +9,10 @@ pip install git+https://github.com/darshanbaral/pyrle.git
 ## Usage
 
 ```python
+import pyrle
+import pandas
+
+
 x = pandas.Series(["a", "a", "b", "b", "a", "a", "a", "c"])
 
 rle = pyrle.encode(x)
@@ -29,17 +33,17 @@ y
 # 5    a
 # 6    a
 # 7    c
-# Name: vals, dtype: object
+# dtype: object
 
-id = pyrle.id(x)
-id
+my_id = pyrle.id(x)
+my_id
 # 0    0
-# 0    0
-# 1    1
-# 1    1
-# 2    2
-# 2    2
-# 2    2
-# 3    3
+# 1    0
+# 2    1
+# 3    1
+# 4    2
+# 5    2
+# 6    2
+# 7    3
 # dtype: int64
 ```
