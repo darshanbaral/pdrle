@@ -18,7 +18,7 @@ def encode(data: pandas.Series) -> pandas.DataFrame:
     vals = []
     runs = []
 
-    for _, curr_val in data.iteritems():
+    for curr_val in data.to_list():
         if curr_val == prev_val:
             prev_run += 1
         else:
