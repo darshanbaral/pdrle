@@ -42,6 +42,7 @@ def decode(vals: pandas.Series, runs: pandas.Series(dtype=int)) -> pandas.Series
     """
     data = vals.repeat(runs)
     data.reset_index(drop=True, inplace=True)
+    data.rename(inplace=True)
     return data
 
 
@@ -52,4 +53,7 @@ def id(data: pandas.Series) -> pandas.Series:
     :return: pandas Series
     """
     rle = encode(data)
-    return rle.index.repeat(rle.runs).to_series()
+    rle_id = rle.index.repeat(rle.runs)
+    rle_id = rle_id.to_series().reset_index(drop=True)
+    return rle_id
+
