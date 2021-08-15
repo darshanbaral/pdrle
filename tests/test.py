@@ -1,6 +1,7 @@
 import unittest
 from parameterized import parameterized
 import pandas
+import numpy
 import pyrle
 
 
@@ -46,7 +47,9 @@ class TestPyrle(unittest.TestCase):
         [pandas.Series([2]),
          pandas.Series([0])],
         [pandas.Series({"a": 1, "b": 2, "c": 3, "d": 3, "e": 3, "f": 1}),
-         pandas.Series({"a": 0, "b": 1, "c": 2, "d": 2, "e": 2, "f": 3})]
+         pandas.Series({"a": 0, "b": 1, "c": 2, "d": 2, "e": 2, "f": 3})],
+        [pandas.Series({"a": 1, "b": 1, "c": numpy.nan, "d": 1, "e": 2, "f": 2}),
+         pandas.Series({"a": 0, "b": 0, "c": 1, "d": 2, "e": 3, "f": 3})]
     ])
     def test_id(self, input_data, expected_output):
         actual_output = pyrle.id(input_data)

@@ -1,4 +1,5 @@
 import pandas
+import numpy
 
 
 def encode(data: pandas.Series) -> pandas.DataFrame:
@@ -52,8 +53,6 @@ def id(data: pandas.Series) -> pandas.Series:
     :param data: input value, a pandas Series
     :return: pandas Series
     """
-    rle = encode(data)
-    rle_id = rle.index.repeat(rle.runs).to_series()
-    rle_id.index = data.index
-    return rle_id
-
+    check = data != data.shift(1)
+    rle_id = check.cumsum().astype(numpy.int64)
+    return rle_id - 1
