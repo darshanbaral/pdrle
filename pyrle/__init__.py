@@ -53,7 +53,7 @@ def id(data: pandas.Series) -> pandas.Series:
     :return: pandas Series
     """
     rle = encode(data)
-    rle_id = rle.index.repeat(rle.runs)
-    rle_id = rle_id.to_series().reset_index(drop=True)
+    rle_id = rle.index.repeat(rle.runs).to_series()
+    rle_id.index = rle_id.reindex_like(data)
     return rle_id
 
