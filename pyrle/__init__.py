@@ -54,6 +54,6 @@ def id(data: pandas.Series) -> pandas.Series:
     """
     rle = encode(data)
     rle_id = rle.index.repeat(rle.runs).to_series()
-    rle_id.index = rle_id.reindex_like(data)
+    rle_id.index = data.index
     return rle_id
 
