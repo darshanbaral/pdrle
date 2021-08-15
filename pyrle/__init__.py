@@ -14,24 +14,9 @@ def encode(data: pandas.Series) -> pandas.DataFrame:
     if data.empty:
         raise ValueError("Input data is empty")
 
-    prev_val = data.iloc[0]
-    prev_run = 0
-    vals = []
-    runs = []
-
-    for curr_val in data.to_list():
-        if curr_val == prev_val:
-            prev_run += 1
-        else:
-            vals.append(prev_val)
-            runs.append(prev_run)
-            prev_val = curr_val
-            prev_run = 1
-
-    vals.append(prev_val)
-    runs.append(prev_run)
-
-    return pandas.DataFrame({"vals": vals, "runs": runs})
+    rle_id = get_id(data)
+    return pandas.DataFrame({"vals": data.groupby(rle_id).first(),
+                             "runs": data.groupby(rle_id).apply(len)})
 
 
 def decode(vals: pandas.Series, runs: pandas.Series(dtype=int)) -> pandas.Series:
@@ -47,12 +32,17 @@ def decode(vals: pandas.Series, runs: pandas.Series(dtype=int)) -> pandas.Series
     return data
 
 
-def id(data: pandas.Series) -> pandas.Series:
+def get_id(data: pandas.Series) -> pandas.Series:
     """
     Generates unique integer id for different runs in a pandas Series
     :param data: input value, a pandas Series
     :return: pandas Series
     """
     check = data != data.shift(1)
+    if data.isna().any():
+        check = check.astype(int).cumsum()
+        check[data.isna()] = check.max() + 1
+        check = check != check.shift(1)
+
     rle_id = check.cumsum().astype(numpy.int64)
     return rle_id - 1
