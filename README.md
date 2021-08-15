@@ -35,15 +35,14 @@ y
 # 7    c
 # dtype: object
 
-my_id = pyrle.id(x)
-my_id
-# 0    0
-# 1    0
-# 2    1
-# 3    1
-# 4    2
-# 5    2
-# 6    2
-# 7    3
-# dtype: int64
+pandas.concat({"x": x, "id": pyrle.get_id(x)}, axis=1)
+#    x  id
+# 0  a   0
+# 1  a   0
+# 2  b   1
+# 3  b   1
+# 4  a   2
+# 5  a   2
+# 6  a   2
+# 7  c   3
 ```
