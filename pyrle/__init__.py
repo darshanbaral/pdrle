@@ -40,8 +40,8 @@ def get_id(data: pandas.Series) -> pandas.Series:
     """
     check = data != data.shift(1)
     if data.isna().any():
-        check = check.astype(int).cumsum()
-        check[data.isna()] = check.max() + 1
+        check = check.cumsum()
+        check[data.isna()] = -1
         check = check != check.shift(1)
 
     rle_id = check.cumsum().astype(numpy.int64)
