@@ -6,6 +6,7 @@ import pyrle
 
 
 class TestPyrle(unittest.TestCase):
+    # test encode
     @parameterized.expand([
         [pandas.Series(["a", "a", "b", "b", "b", "a", "a", "c"]),
          pandas.DataFrame({"vals": ["a", "b", "a", "c"],
@@ -27,6 +28,7 @@ class TestPyrle(unittest.TestCase):
         actual_output = pyrle.encode(input_data)
         pandas.testing.assert_frame_equal(actual_output, expected_output)
 
+    # test decode
     @parameterized.expand([
         [pandas.Series(["a", "a", "b", "b", "b", "a", "a", "c"]),
          pandas.DataFrame({"vals": ["a", "b", "a", "c"],
@@ -42,6 +44,7 @@ class TestPyrle(unittest.TestCase):
         actual_output = pyrle.decode(input_data.vals, input_data.runs)
         pandas.testing.assert_series_equal(actual_output, expected_output)
 
+    # test get_id
     @parameterized.expand([
         [pandas.Series(["a", "a", "b", "b", "b", "a", "a", "c"]),
          pandas.Series([0, 0, 1, 1, 1, 2, 2, 3])],
