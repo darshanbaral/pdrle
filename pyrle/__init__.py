@@ -15,8 +15,7 @@ def encode(data: pandas.Series) -> pandas.DataFrame:
         raise ValueError("Input data is empty")
 
     rle_id = get_id(data)
-    return pandas.DataFrame({"vals": data.groupby(rle_id).first(),
-                             "runs": data.groupby(rle_id).apply(len)})
+    return pandas.DataFrame({"vals": data.groupby(rle_id).first(), "runs": data.groupby(rle_id).size()})
 
 
 def decode(vals: pandas.Series, runs: pandas.Series(dtype=int)) -> pandas.Series:
