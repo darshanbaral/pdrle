@@ -1,9 +1,9 @@
-# pyrle
+# pdrle
 
 ## Installation
 
 ```console
-pip install git+https://github.com/darshanbaral/pyrle.git
+pip install pdrle
 ```
 
 ## Usage
