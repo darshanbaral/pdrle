@@ -45,3 +45,14 @@ def get_id(data: pandas.Series) -> pandas.Series:
 
     rle_id = check.cumsum().astype(numpy.int64)
     return rle_id - 1
+
+
+def get_sn(data: pandas.Series) -> pandas.Series:
+    """
+    Generates serial number for different elements of each consecutive runs of values in a pandas Series
+    :param data: input value, a pandas Series
+    :return: pandas Series
+    """
+    grp = get_id(data)
+    rle_sn = data.groupby(grp).cumcount()
+    return rle_sn
