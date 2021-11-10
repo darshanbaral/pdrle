@@ -9,6 +9,6 @@ setup(name="pdrle",
       author_email="darshanbaral@gmail.com",
       license="MIT",
       packages=["pdrle"],
-      download_url="https://github.com/darshanbaral/pdrle/archive/refs/tags/0.4.tar.gz",
+      download_url="https://github.com/darshanbaral/pdrle/archive/refs/tags/0.4.1.tar.gz",
       install_requires=["pandas"]
       )
