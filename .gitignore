@@ -4,3 +4,4 @@
 pyrle.egg-info/
 pdrle.egg-info/
 __pycache__/
+dist/
