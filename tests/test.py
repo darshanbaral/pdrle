@@ -5,7 +5,7 @@ import numpy
 import pdrle
 
 
-class TestPyrle(unittest.TestCase):
+class TestPdrle(unittest.TestCase):
     # test encode
     @parameterized.expand([
         [pandas.Series(["a", "a", "b", "b", "b", "a", "a", "c"]),
@@ -14,6 +14,9 @@ class TestPyrle(unittest.TestCase):
         [pandas.Series(["home", "home", "home", "home"]),
          pandas.DataFrame({"vals": ["home"],
                            "runs": [4]})],
+        [pandas.Series(["home", "home", numpy.nan, numpy.nan, numpy.nan, "home", "home"]),
+         pandas.DataFrame({"vals": ["home", numpy.nan, "home"],
+                           "runs": [2, 3, 2]})],
         [pandas.Series([1, 1, 1, 1, 1, 1, 1]),
          pandas.DataFrame({"vals": [1],
                            "runs": [7]})],
@@ -48,8 +51,14 @@ class TestPyrle(unittest.TestCase):
     @parameterized.expand([
         [pandas.Series(["a", "a", "b", "b", "b", "a", "a", "c"]),
          pandas.Series([0, 0, 1, 1, 1, 2, 2, 3])],
+        [pandas.Series([(1, 2), (1, 2), (1, 3), (4, 5)]),
+         pandas.Series([0, 0, 1, 2])],
+        [pandas.Series([(1, 2), (1, 2), (numpy.nan, numpy.nan), (numpy.nan, numpy.nan)]),
+         pandas.Series([0, 0, 1, 1])],
         [pandas.Series([1, 1, 1, 1, 1, 1, 1]),
          pandas.Series([0, 0, 0, 0, 0, 0, 0])],
+        [pandas.Series(["home", "home", numpy.nan, numpy.nan, numpy.nan, "home", "home"]),
+         pandas.Series([0, 0, 1, 1, 1, 2, 2])],
         [pandas.Series([2]),
          pandas.Series([0])],
         [pandas.Series({"a": 1, "b": 2, "c": 3, "d": 3, "e": 3, "f": 1}),
@@ -69,6 +78,8 @@ class TestPyrle(unittest.TestCase):
          pandas.Series([0, 1, 0, 1, 2, 0, 1, 0])],
         [pandas.Series([1, 1, 1, 1, 1, 1, 1]),
          pandas.Series([0, 1, 2, 3, 4, 5, 6])],
+        [pandas.Series(["home", "home", numpy.nan, numpy.nan, numpy.nan, "home", "home"]),
+         pandas.Series([0, 1, 0, 1, 2, 0, 1])],
         [pandas.Series([2]),
          pandas.Series([0])],
         [pandas.Series({"a": 1, "b": 2, "c": 3, "d": 3, "e": 3, "f": 1}),
