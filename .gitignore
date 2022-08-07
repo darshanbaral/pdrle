@@ -7,3 +7,5 @@ pdrle.egg-info/
 __pycache__/
 dist/
 scratch/
+create_doc.ps1
+*.mako
