@@ -1,52 +1,45 @@
+"""
+Run length encoding for pandas Series
+
+## Installation
+
+```console
+pip install pdrle
+```
+
+## Usage
+
+```python
+import pdrle
 import pandas
 import numpy
 
 
-def get_id(data: pandas.Series) -> pandas.Series:
-    """
-    Generates unique integer id for different runs in a pandas Series
-    :param data: input value, a pandas Series
-    :return: pandas Series
-    """
-    assert isinstance(data, pandas.Series), "Input must be a pandas Series"
-    assert (not data.empty), "Input is empty"
+x = pandas.Series(data=[1, 2, 2, 2, 1, 1, numpy.nan, numpy.nan, 3],
+                  index=["a", "a", "b", "c", "d", "d", "e", "f", "g"],
+                  name="data")
+rle = pdrle.Rle(x)
+print(rle.rle)
+#    vals  runs
+# 0   1.0     1
+# 1   2.0     3
+# 2   1.0     2
+# 3   NaN     2
+# 4   3.0     1
 
-    arr = data.to_numpy()
-    check = numpy.append([False], arr[1:] != arr[:-1])
-    if data.isna().any():
-        check = check.cumsum()
-        check[numpy.where(data.isna())] = -1
-        check = numpy.append([False], check[1:] != check[:-1])
+df = pandas.concat([x, rle.count, rle.sn, rle.id], axis=1)
+print(df)
+#    data  rle_count  rle_sn  rle_id
+# a   1.0          1       0       0
+# a   2.0          3       0       1
+# b   2.0          3       1       1
+# c   2.0          3       2       1
+# d   1.0          2       0       2
+# d   1.0          2       1       2
+# e   NaN          2       0       3
+# f   NaN          2       1       3
+# g   3.0          1       0       4
+```
+"""
 
-    rle_id = pandas.Series(check.cumsum().astype(numpy.int64))
-    rle_id.index = data.index
-    return rle_id
-
-
-def encode(data: pandas.Series) -> pandas.DataFrame:
-    """
-    Computes the lengths and values of runs of equal values in a vector.
-    :param data: pandas Series
-    :return: pandas Dataframe with columns 'runs' (length of each run) and 'vals' (corresponding values)
-    """
-    return data.groupby(get_id(data), sort=False).agg(vals="first", runs="size").reset_index(drop=True)
-
-
-def decode(vals: pandas.Series,
-           runs: pandas.Series(dtype=int)) -> pandas.Series:
-    """
-    Reverses encode operation. Returns pandas Series from lengths of run and corresponding values.
-    :param vals: values of different runs
-    :param runs: lengths of runs corresponding to vals
-    :return: pandas Series
-    """
-    return vals.repeat(runs).reset_index(drop=True).rename()
-
-
-def get_sn(data: pandas.Series) -> pandas.Series:
-    """
-    Generates serial number for different elements of each consecutive runs of values in a pandas Series
-    :param data: input value, a pandas Series
-    :return: pandas Series
-    """
-    return data.groupby(get_id(data)).cumcount()
+from .rle import Rle

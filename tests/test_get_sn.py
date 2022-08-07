@@ -2,7 +2,7 @@ import unittest
 from parameterized import parameterized
 import pandas
 import numpy
-from pdrle import get_sn
+from pdrle import Rle
 
 
 class TestGetSn(unittest.TestCase):
@@ -23,5 +23,7 @@ class TestGetSn(unittest.TestCase):
          pandas.Series({"a": 0, "b": 1, "c": 0, "d": 1, "e": 2, "f": 0})]
     ])
     def test_get_sn(self, input_data, expected_output):
-        actual_output = get_sn(input_data)
+        expected_output.name = "rle_sn"
+        rle = Rle(input_data)
+        actual_output = rle.sn
         pandas.testing.assert_series_equal(actual_output, expected_output)
