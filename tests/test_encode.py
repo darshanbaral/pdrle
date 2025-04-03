@@ -2,14 +2,15 @@ import unittest
 
 import numpy
 import pandas
-from parameterized import parameterized
 
 from pdrle import Rle
 
 
 class TestEncode(unittest.TestCase):
-    @parameterized.expand(
-        [
+    def test_encode(
+        self,
+    ):
+        test_data = [
             [
                 pandas.Series(["a", "a", "b", "b", "b", "a", "a", "c"]),
                 pandas.DataFrame({"vals": ["a", "b", "a", "c"], "runs": [2, 3, 2, 1]}),
@@ -24,10 +25,10 @@ class TestEncode(unittest.TestCase):
             ],
             [
                 pandas.Series(
-                    ["home", "home", numpy.nan, numpy.nan, numpy.nan, "home", "home"]
+                    ["home", "home", None, None, None, "home", "home"]
                 ),
                 pandas.DataFrame(
-                    {"vals": ["home", numpy.nan, "home"], "runs": [2, 3, 2]}
+                    {"vals": ["home", None, "home"], "runs": [2, 3, 2]}
                 ),
             ],
             [
@@ -49,8 +50,8 @@ class TestEncode(unittest.TestCase):
                 pandas.DataFrame({"vals": [1, numpy.nan, 2], "runs": [2, 3, 1]}),
             ],
         ]
-    )
-    def test_encode(self, input_data, expected_output):
-        rle = Rle(input_data)
-        actual_output = rle.data
-        pandas.testing.assert_frame_equal(actual_output, expected_output)
+        for input_data, expected_output in test_data:
+            with self.subTest(input_data=input_data):
+                rle = Rle(input_data)
+                actual_output = rle.data
+                pandas.testing.assert_frame_equal(actual_output, expected_output)
