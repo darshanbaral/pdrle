@@ -1,11 +1,31 @@
+# Virtual environment directories (for safety)
 .venv/
 venv/
+
+# uv-specific cache (though uv doesn't use a traditional venv, caching may still apply)
+.uv/
+
+# Python version management
+.python-version
+
+# Editor/IDE settings
 .vscode/
 .idea/
-pyrle.egg-info/
-pdrle.egg-info/
+
+# Python cache files
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Build artifacts
+*.egg-info/
 dist/
+build/
+
+# Scratch files & temporary directories
 scratch/
 create_doc.ps1
+
+# Mako template files
 *.mako

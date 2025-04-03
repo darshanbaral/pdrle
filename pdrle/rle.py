@@ -1,11 +1,11 @@
-import pandas
 import numpy
+import pandas
 
 
 class Rle:
     def __init__(self, x: pandas.Series):
         assert isinstance(x, pandas.Series), "Input must be a pandas Series"
-        assert (not x.empty), "Input is empty"
+        assert not x.empty, "Input is empty"
         self.input = x
         self.__index = x.index
         self.__id = None
@@ -39,7 +39,11 @@ class Rle:
         Dataframe with columns `runs` (length of each run) and `vals` (corresponding values)
         """
         if self.__rle is None:
-            self.__rle = self.input.groupby(self.id, sort=False).agg(vals="first", runs="size").reset_index(drop=True)
+            self.__rle = (
+                self.input.groupby(self.id, sort=False)
+                .agg(vals="first", runs="size")
+                .reset_index(drop=True)
+            )
 
         return self.__rle
 

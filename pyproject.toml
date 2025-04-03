@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdrle"
+version = "1.0.1"
+description = "Package to get lengths and values of runs of equal values in a pandas Series."
+authors = [{ name = "Darshan Baral" }]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pandas>=2.2.3",
+]
+
+[dependency-groups]
+dev = [
+    "mako>=1.3.9",
+]
