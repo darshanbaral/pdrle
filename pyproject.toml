@@ -2,6 +2,9 @@
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools.packages]
+find = { include = ["pdrle"] }
+
 [project]
 name = "pdrle"
 version = "1.0.1"
@@ -16,4 +19,5 @@ dependencies = [
 [dependency-groups]
 dev = [
     "mako>=1.3.9",
+    "setuptools>=78.1.0",
 ]
